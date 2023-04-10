@@ -1,3 +1,6 @@
-s/w 
-IDE: Visual Studio Code
+S/W 
+IDE: Visual Studio Code  for Java
+Chrome web driver
+Jars for Selinium.
+
  
