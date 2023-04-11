@@ -77,7 +77,7 @@ driver.switchTo().alert().accept();
         driver.findElement(By.xpath("//button[contains(text(),'Customers')]")).click();
         WebElement DelButton;
 		DelButton = driver.findElement(By.xpath("//td[contains(text(),"+fname+")]/following::td[contains(text(),'"+Lname+"')]/following::td[3]//button"));
-        System.out.println("successfully "+fname+" and   "+Lname);
+        System.out.println("successfully deleted "+fname+" and   "+Lname);
 		DelButton.click();
     }
 
@@ -167,7 +167,7 @@ public static Set<Customer> verfiyCustomers(List<Customer> listOne, List<Custome
                       
             List<Customer> excList = getExixtingCustomer();
             List<Customer> customers = getCustomerDetails();
-            Set<Customer> resultsSet =  verfiyCustomers(excList, customers) ;
+           // Set<Customer> resultsSet =  verfiyCustomers(excList, customers) ;
             deleteCustomer( fname, Lname);
             driver.close();
         
