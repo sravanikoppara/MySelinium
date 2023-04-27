@@ -13,17 +13,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class LoginPage extends Customer {
-    private static final String FORM_URL = "https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login";
+public class LoginPage extends Customer   {
+    protected static final String FORM_URL = "https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login";
     private static final String Bank_ManagerLoginXpath = "//button[contains(text(),'Bank Manager Login')]";
+    protected static final String CustomeroginXpath = "//button[contains(text(),'Customer Login')]";
     private static final String Add_customerXpath = "//button[contains(text(),'Add Customer')]";
     private static String First_NameXpath = "//input[@placeholder='First Name']";
     private static String Last_NameXpath = "//input[@placeholder='Last Name']";
     private static String PostcodeXpath = "//input[@placeholder='Post Code']";
     private static String SUBMIT_ID = "//button[@type='submit']";
-    private static ChromeDriver driver;
+    protected static ChromeDriver driver;
     private static String fname = "Jackson";
     private static String Lname = "Christopher";
+    private static String fname1 = "Christopher";
+    private static String Lname1 = "Connely";
 
     public LoginPage() {
         driver = new ChromeDriver();
@@ -33,6 +36,8 @@ public class LoginPage extends Customer {
         driver.get(FORM_URL);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         driver.manage().window().maximize();
+    }
+    public void loginBankManger(){
         driver.findElement(By.xpath(Bank_ManagerLoginXpath)).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         driver.findElement(By.xpath(Add_customerXpath)).click();
@@ -42,12 +47,12 @@ public class LoginPage extends Customer {
         driver.findElement(By.xpath(First_NameXpath)).sendKeys(customers.getFirstName());
         driver.findElement(By.xpath(Last_NameXpath)).sendKeys(customers.getLastName());
         driver.findElement(By.xpath(PostcodeXpath)).sendKeys(customers.getPostCode());
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
     }
 
     public static void submitForm() {
         driver.findElement(By.xpath(SUBMIT_ID)).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
         driver.switchTo().alert().accept();
     }
 
@@ -78,9 +83,23 @@ public class LoginPage extends Customer {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         driver.findElement(By.xpath("//button[contains(text(),'Customers')]")).click();
         WebElement DelButton;
+        WebElement DelButton1;
+
         DelButton = driver.findElement(By.xpath("//td[contains(text()," + fname + ")]/following::td[contains(text(),'"
                 + Lname + "')]/following::td[3]//button"));
-        System.out.println("successfully deleted " + fname + " and   " + Lname);
+       DelButton1 = driver.findElement(By.xpath("//td[contains(text()," + fname1 + ")]/following::td[contains(text(),'"
+                + Lname1 + "')]/following::td[3]//button"));
+        System.out.println("successfully deleted " + fname + "  " + Lname);
+        DelButton.click();
+    }
+    public static void deleteCustomer2(String fname, String Lname) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.findElement(By.xpath("//button[contains(text(),'Customers')]")).click();
+        WebElement DelButton;
+        
+        DelButton = driver.findElement(By.xpath("//td[contains(text()," + fname1 + ")]/following::td[contains(text(),'"
+                + Lname1 + "')]/following::td[3]//button"));
+        System.out.println("successfully deleted " + fname1 + "  " + Lname1);
         DelButton.click();
     }
 
@@ -120,7 +139,6 @@ public class LoginPage extends Customer {
         customer6.setFirstName("Jackson");
         customer6.setLastName("Connely");
         customer6.setPostCode("L789C349");
-
         customers.add(cust);
         customers.add(customer1);
         customers.add(customer2);
@@ -128,11 +146,11 @@ public class LoginPage extends Customer {
         customers.add(customer4);
         customers.add(customer5);
         customers.add(customer6);
-        for (int i = 0; i < customers.size(); i++) {
+       /*  for (int i = 0; i < customers.size(); i++) {
             System.out.println(customers.get(i).getFirstName());
             System.out.println(customers.get(i).getLastName());
             System.out.println(customers.get(i).getPostCode());
-        }
+        } */
         return customers;
 
     }
@@ -159,6 +177,7 @@ public class LoginPage extends Customer {
         LoginPage registrationPage = new LoginPage();
         
             registrationPage.loadrUrl();
+            registrationPage.loginBankManger();
            for(int i=0;i< getCustomerDetails().size();i++){
                 fillForm(getCustomerDetails().get(i));
                 submitForm();
@@ -170,9 +189,10 @@ public class LoginPage extends Customer {
            Iterator<Customer> it = resultsSet.iterator();
            while(it.hasNext())
            {
-            System.out.println("customer added  "+it.next().getFirstName().);
+            System.out.println("customer added  "+it.next().getFirstName());
            }
             deleteCustomer( fname, Lname);
+            //deleteCustomer( fname1, Lname1);
             //driver.close();
         
 
